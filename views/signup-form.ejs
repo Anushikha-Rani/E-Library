@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <title>Register as <%= selectedRole.charAt(0).toUpperCase() + selectedRole.slice(1) %></title>
+    <style>
+        .form-container {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fff;
+        }
+        .auth-form label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .auth-form input[type="text"],
+        .auth-form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .alert {
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .error-message {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/header') %>
+    
+    <main class="container form-container">
+        <h1>Register as <%= selectedRole.charAt(0).toUpperCase() + selectedRole.slice(1) %></h1>
+        
+        <% if (error) { %>
+            <div class="alert error-message">
+                <%= error %>
+            </div>
+        <% } %>
+
+        <form action="/signup" method="POST" class="auth-form">
+            
+            <input type="hidden" name="role" value="<%= selectedRole %>">
+
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="roll">Roll Number / Unique ID:</label>
+            <input type="text" id="roll" name="roll" placeholder="Enter your <%= selectedRole %> ID" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <% if (selectedRole === 'student') { %>
+                <label for="universityRoll">University Roll Number (Optional):</label>
+                <input type="text" id="universityRoll" name="universityRoll" placeholder="e.g., 1234567890">
+            <% } %>
+
+            <button type="submit" class="btn btn-primary" style="margin-top: 20px; width: 100%;">Complete Registration</button>
+            <p style="text-align: center; margin-top: 15px;">
+                Already registered? <a href="/login">Login here</a>.
+            </p>
+            <p style="text-align: center;"><a href="/signup">← Change Role Selection</a></p>
+        </form>
+    </main>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

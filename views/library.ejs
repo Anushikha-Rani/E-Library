@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <title>E-Library — Library</title>
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <main class="container">
+    <h2>Library</h2>
+
+    <!-- Two library cards -->
+    <div class="card libraries-overview">
+      <div class="library-card">
+        <h3>General Library</h3>
+        <p><strong>Timing:</strong> 9:00 – 5:00</p>
+        <p><strong>Issued Books:</strong> 02</p>
+        <button class="btn">Search E-Book</button>
+      </div>
+      <div class="library-card">
+        <h3>University Library</h3>
+        <p><strong>Timing:</strong> 9:00 – 6:00</p>
+        <p><strong>Issued Books:</strong> 02</p>
+        <button class="btn">Search E-Book</button>
+      </div>
+    </div>
+
+    <!-- Reminder card -->
+    <div class="card reminder-card">
+      <h3>Reminder !!</h3>
+      <p>123 BOOK renewable in 1 day…</p>
+      <p>XYZ … eBook available</p>
+    </div>
+
+    <!-- Table of resources (e.g. PYQs, Research Papers, Notes) -->
+    <div class="card ebook-list-card">
+      <h3>Available Resources</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Subject</th>
+            <th>Chapter / Topic</th>
+            <th>Downloaded</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Notes</td>
+            <td>Computer Networks</td>
+            <td>Chapter 1: OSI Model</td>
+            <td><button class="btn">Download</button></td>
+          </tr>
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

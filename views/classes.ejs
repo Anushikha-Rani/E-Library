@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <title>E-Library — Classes</title>
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <main class="container">
+    <h2>Classes / Today's Schedule</h2>
+
+    <div class="card schedule-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Lecture</th>
+            <th>Time</th>
+            <th>Notes / Assignment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Computer Network</td>
+            <td>9:00 - 10:30</td>
+            <td><button class="btn">Download</button></td>
+          </tr>
+          <tr>
+            <td>Cloud Computing</td>
+            <td>10:30 - 12:00</td>
+            <td><button class="btn">Download</button></td>
+          </tr>
+          <tr>
+            <td>NLP</td>
+            <td>12:00 - 1:00</td>
+            <td><button class="btn">Download</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- You can add additional sections for assignment uploads/downloads -->
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

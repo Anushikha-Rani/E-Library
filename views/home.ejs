@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <title>Home — E-Library</title>
+    <style>
+        /* Styling for the new CTA section */
+        .cta-section {
+            text-align: center;
+            margin: 40px auto;
+            padding: 30px;
+            background: #eaf6ff; /* Light blue background to make it stand out */
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            max-width: 600px;
+        }
+        .cta-section h2 {
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+        .btn-register {
+            display: inline-block;
+            background-color: #28a745; /* Green button for positive action */
+            color: white;
+            padding: 12px 30px;
+            font-size: 1.2em;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        .btn-register:hover {
+            background-color: #218838;
+        }
+        /* Basic chatbot card styling (can be moved to style.css) */
+        .chatbot-card {
+            margin-top: 40px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        /* Ensure responsive input layout */
+        .chatbot-input-group {
+            margin-top: 10px;
+            display: flex;
+            gap: 5px; /* Added a small gap for spacing */
+        }
+        #userInput {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #sendBtn {
+            padding: 8px 15px;
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <main class="container">
+        <h1>ABC College E-Library Portal</h1>
+        <p>Welcome to our portal. Here you can access study resources, library, guidance, and more.</p>
+
+        <% if (!user) { %>
+            <div class="cta-section">
+                <h2>Ready to Get Started?</h2>
+                <p>Access your personalized dashboard, academic records, and the full library catalogue.</p>
+                <a href="/signup" class="btn-register">
+                    🚀 Register Today!
+                </a>
+                <p style="margin-top: 15px; font-size: 0.9em;">Already have an account? <a href="/login">Log in here</a>.</p>
+            </div>
+        <% } %>
+
+        <div class="card chatbot-card">
+            <h3>Ask me anything!</h3>
+            <div id="chatbox" style="min-height: 150px; background: #f0f0f0; padding:10px; overflow-y:auto; border: 1px solid #ccc;"></div>
+            
+            <div class="chatbot-input-group">
+                <input type="text" id="userInput" placeholder="Type your question here..."/>
+                <button id="sendBtn" class="btn">Send</button>
+            </div>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+
+    <script>
+        // The script is self-reliant, requiring no external EJS interpolation aside from includes.
+        
+        const sendBtn = document.getElementById('sendBtn');
+        const userInput = document.getElementById('userInput');
+        const chatbox = document.getElementById('chatbox');
+
+        const sendMessage = async () => {
+            const msg = userInput.value.trim();
+            if (!msg) return;
+
+            // Display user message immediately
+            chatbox.innerHTML += '<p><strong>You:</strong> ' + msg + '</p>';
+            userInput.value = '';
+            chatbox.scrollTop = chatbox.scrollHeight;
+
+            // Disable input while waiting for response
+            userInput.disabled = true;
+            sendBtn.disabled = true;
+
+            try {
+                const resp = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: msg })
+                });
+
+                const data = await resp.json();
+                
+                // Display bot message
+                chatbox.innerHTML += '<p><strong>Bot:</strong> ' + data.reply + '</p>';
+                
+            } catch (err) {
+                console.error("Chatbot error:", err);
+                chatbox.innerHTML += '<p style="color:red;"><strong>Bot:</strong> Sorry, I could not connect to the guidance counselor (AI service error).</p>';
+            } finally {
+                // Re-enable input regardless of success/failure
+                userInput.disabled = false;
+                sendBtn.disabled = false;
+                chatbox.scrollTop = chatbox.scrollHeight;
+                userInput.focus(); // Bring focus back to the input
+            }
+        };
+        
+        sendBtn.onclick = sendMessage;
+        
+        // Allow sending message by pressing Enter key
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login — E-Library</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <div class="container">
+    <h2>Login</h2>
+    <% if (error) { %>
+      <p style="color:red;"><%= error %></p>
+    <% } %>
+    <form action="/login" method="POST">
+      <label>Roll No:</label><br/>
+      <input type="text" name="roll" required /><br/>
+      <label>Password:</label><br/>
+      <input type="password" name="password" required /><br/>
+      <button class="btn" type="submit">Login</button>
+    </form>
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

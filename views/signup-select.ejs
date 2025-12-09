@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <title>Select Role for Registration</title>
+    <style>
+        /* CSS specific to the role selection page */
+        .role-selector {
+            display: flex;
+            flex-wrap: wrap; /* Allows wrapping on smaller screens */
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .role-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            width: 250px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .role-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        .role-card h2 {
+            margin-top: 0;
+        }
+        .role-card p {
+            min-height: 40px; /* Ensures consistent card height */
+        }
+        .btn-green { background-color: #28a745; color: white; }
+        .btn-teal { background-color: #009688; color: white; }
+        .btn-orange { background-color: #ff9800; color: white; }
+        .btn { /* Basic button styling inherited from style.css or defined here */
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/header') %>
+    
+    <main class="container">
+        <h1>Welcome! Please Select Your Role to Register</h1>
+        <p class="text-center">Choose the user type that applies to you to continue the registration process:</p>
+
+        <div class="role-selector">
+            
+            <div class="role-card">
+                <h2>🧑‍🎓 Student</h2>
+                <p>Access your dashboard, academic records, and library resources.</p>
+                <a href="/signup/student" class="btn btn-green">Register as Student</a>
+            </div>
+            
+            <div class="role-card">
+                <h2>🧑‍🏫 Teacher</h2>
+                <p>Manage your assigned class, view student performance, and coordinate activities.</p>
+                <a href="/signup/teacher" class="btn btn-teal">Register as Teacher</a>
+            </div>
+
+            <div class="role-card">
+                <h2>📚 Librarian</h2>
+                <p>Control book inventory, issue records, and manage library resources.</p>
+                <a href="/signup/librarian" class="btn btn-orange">Register as Librarian</a>
+            </div>
+
+        </div>
+        
+        <p style="text-align: center; margin-top: 30px;">Already have an account? <a href="/login">Login here</a>.</p>
+    </main>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <title>Librarian Control</title>
+</head>
+<body>
+    <%- include('../partials/header') %>
+    
+    <main class="container">
+        <h1>Librarian Control Panel</h1>
+        <p>Welcome, **<%= user.name %>** (<%= user.role %>). Monitor book records and student issues here.</p>
+
+        <div class="card search-card" style="margin-bottom: 30px;">
+            <h3>Lookup Student Book Issues</h3>
+            <form action="/librarian/search-student" method="POST">
+                <input 
+                    type="text" 
+                    name="roll" 
+                    placeholder="Enter Student Roll Number (e.g., 22111234)" 
+                    value="<%= searchRoll || '' %>"
+                    required
+                    style="width: 70%; padding: 8px;"
+                />
+                <button type="submit" class="btn">Search Issues</button>
+            </form>
+
+            <% if (studentIssueRecords) { %>
+                <div class="results-container" style="margin-top: 20px;">
+                    <h4>Records for: <%= studentIssueRecords.studentName %> (<%= studentIssueRecords.studentRoll %>)</h4>
+                    <% if (studentIssueRecords.books.length > 0) { %>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Issue Date</th>
+                                    <th>**Due Date**</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% studentIssueRecords.books.forEach(book => { %>
+                                    <tr>
+                                        <td><%= book.title %></td>
+                                        <td><%= book.issueDate %></td>
+                                        <td><%= book.returnDate %></td>
+                                        <td><button class="btn btn-small btn-success">Mark Returned</button></td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    <% } else { %>
+                        <p style="color: green;">This student has no books currently issued.</p>
+                    <% } %>
+                </div>
+            <% } else if (searchRoll) { %>
+                 <p style="color: red; margin-top: 10px;">Error: Student with Roll Number **<%= searchRoll %>** not found in system.</p>
+            <% } %>
+        </div>
+
+        <div class="card overview-card">
+            <h3>Library Resource Status</h3>
+            <h4>Available Resources:</h4>
+            <ul>
+                <% libraryData.resources.forEach(res => { %>
+                    <li><strong><%= res.subject %>:</strong> <%= res.topic %> (<%= res.type %>)</li>
+                <% }) %>
+            </ul>
+            <p>
+                <a href="#" class="btn btn-primary">Manage Inventory</a> 
+                <a href="#" class="btn btn-primary">Add New Book/Resource</a>
+            </p>
+        </div>
+    </main>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>

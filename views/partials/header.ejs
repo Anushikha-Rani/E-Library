@@ -1,0 +1,76 @@
+<header>
+  <nav class="top-nav">
+    <ul>
+      <li><a href="/" class="<%= page==='home' ? 'active' : '' %>">Home</a></li>
+
+      <% if (user) { %>
+        <% if (user.role === 'student') { %>
+          <li><a href="/student" class="<%= page==='student' ? 'active' : '' %>">Student Portal</a></li>
+        <% } else if (user.role === 'librarian') { %>
+          <li><a href="/librarian/control" class="<%= page==='librarian' ? 'active' : '' %>">Librarian Control</a></li>
+        <% } else if (user.role === 'teacher') { %>
+          <li><a href="/teacher/class" class="<%= page==='teacher' ? 'active' : '' %>">My Class</a></li>
+        <% } else if (user.role === 'admin') { %>
+          <li><a href="/admin/dashboard" class="<%= page==='admin' ? 'active' : '' %>">Admin Dashboard</a></li>
+        <% } %>
+
+        <li><a href="/library" class="<%= page==='library' ? 'active' : '' %>">Library</a></li>
+        <li><a href="/guidance" class="<%= page==='guidance' ? 'active' : '' %>">Guidance</a></li>
+        
+        <li class="nav-right">
+          <form action="/logout" method="POST" style="display:inline;">
+            <button class="btn-link" type="submit">Logout (<%= user.name %>)</button>
+          </form>
+        </li>
+        
+      <% } else { %>
+        <li><a href="/signup" class="<%= page==='signup' ? 'active' : '' %>">Sign Up</a></li>
+        <li><a href="/login" class="<%= page==='login' ? 'active' : '' %>">Login</a></li>
+        
+      <% } %>
+    </ul>
+  </nav>
+</header>
+
+<style>
+/* Basic styling suggestion for consistency */
+.top-nav {
+    background-color: #333;
+    padding: 10px 0;
+}
+.top-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.top-nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+}
+.top-nav ul li a:hover,
+.top-nav ul li a.active {
+    background-color: #555;
+    border-radius: 4px;
+}
+.btn-link {
+    background: none;
+    border: none;
+    color: #ffd700; /* Highlighted color for logout */
+    cursor: pointer;
+    padding: 10px 15px;
+    text-decoration: none;
+}
+.btn-link:hover {
+    color: white;
+    text-decoration: underline;
+}
+/* Pushes the Logout button to the far right */
+.nav-right {
+    margin-left: auto; 
+}
+</style>

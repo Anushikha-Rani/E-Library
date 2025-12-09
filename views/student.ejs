@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <title>E-Library — Student</title>
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <main class="container">
+    <h2>Student Dashboard</h2>
+
+    <!-- Profile card -->
+    <div class="card profile-card">
+      <div class="profile-info">
+        <img src="/assets/profile-placeholder.png" alt="Profile" class="profile-pic">
+        <div class="info">
+          <p><strong>Name:</strong> USER123</p>
+          <p><strong>Roll No:</strong> 22111234</p>
+          <p><strong>University Roll No:</strong> 12345623145</p>
+          <p><strong>Semester:</strong> 6th</p>
+          <p><strong>College:</strong> ABC College</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Graph placeholder -->
+    <div class="card graph-card">
+      <h3>Performance Graph</h3>
+      <div class="graph-placeholder">[Graph goes here]</div>
+    </div>
+
+    <!-- Downloads / Reports section -->
+    <div class="card downloads-card">
+      <h3>Downloads / Reports</h3>
+      <button class="btn">Semester Marksheet</button>
+      <button class="btn">Performance Report</button>
+      <button class="btn">Records</button>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

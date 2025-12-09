@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+  <title>Guidance Portal</title>
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <main class="container">
+    <h1>📚 AI Career Guidance Counselor</h1>
+    <p>Use the chat interface below to get personalized roadmaps, resource recommendations, and career guidance tailored to your goals.</p>
+
+    <div class="card chatbot-card">
+      <h3>Ask about your career path, higher studies, or resources!</h3>
+      <div id="chatbox" style="min-height: 250px; max-height: 400px; background: #f9f9f9; padding:15px; overflow-y:auto; border: 1px solid #ddd; border-radius: 5px;">
+        <p><strong>Bot:</strong> Hello! I am your AI Career Counselor. Tell me your major or career interest, and I can help you build a roadmap.</p>
+      </div>
+      <div style="display: flex; margin-top: 10px;">
+        <input type="text" id="userInput" placeholder="e.g., 'What is the roadmap for a full stack developer?'" style="flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 3px 0 0 3px;"/>
+        <button id="sendBtn" class="btn" style="border-radius: 0 3px 3px 0;">Send</button>
+      </div>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+
+  <script>
+    // Reusing the same AJAX logic from home.ejs
+    const sendBtn = document.getElementById('sendBtn');
+    sendBtn.onclick = async () => {
+      const input = document.getElementById('userInput');
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      const chatbox = document.getElementById('chatbox');
+      
+      // User message
+      chatbox.innerHTML += '<p style="color: #007bff; margin: 5px 0;"><strong>You:</strong> ' + msg + '</p>';
+      
+      // Status message
+      chatbox.innerHTML += '<p id="loading-status" style="color: #6c757d; margin: 5px 0;"><em>Bot is typing...</em></p>';
+      
+      chatbox.scrollTop = chatbox.scrollHeight;
+      input.value = '';
+      
+      const resp = await fetch('/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: msg })
+      });
+
+      // Remove loading status
+      const loadingStatus = document.getElementById('loading-status');
+      if (loadingStatus) loadingStatus.remove();
+
+      const data = await resp.json();
+      
+      // Bot reply
+      chatbox.innerHTML += '<p style="margin: 5px 0;"><strong>Bot:</strong> ' + data.reply + '</p>';
+      
+      chatbox.scrollTop = chatbox.scrollHeight;
+    };
+  </script>
+</body>
+</html>

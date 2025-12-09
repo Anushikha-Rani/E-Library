@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <%- include('../partials/header') %>
+    
+    <main class="container">
+        <h1>Admin Dashboard - Student Records</h1>
+        <p>Welcome, <%= user.name %> (<%= user.role %>).</p>
+
+        <div class="card search-card">
+            <h3>Search Student by Roll Number</h3>
+            <form action="/admin/search" method="POST">
+                <input 
+                    type="text" 
+                    name="roll" 
+                    placeholder="Enter Student Roll Number (e.g., 22111234)" 
+                    value="<%= searchQuery || '' %>"
+                    required
+                    style="width: 70%; padding: 8px;"
+                />
+                <button type="submit" class="btn">Search</button>
+            </form>
+        </div>
+
+        <div class="results-container" style="margin-top: 20px;">
+            <% if (searchQuery && !foundStudent) { %>
+                <div class="alert" style="color: red;">
+                    No student found with Roll Number: **<%= searchQuery %>**.
+                </div>
+            <% } else if (foundStudent) { %>
+                <div class="card student-record-card">
+                    <h2>Student Found: <%= foundStudent.name %></h2>
+                    
+                    <div class="detail-row">
+                        <strong>Roll Number:</strong> <span><%= foundStudent.roll %></span>
+                    </div>
+                    <div class="detail-row">
+                        <strong>University Roll:</strong> <span><%= foundStudent.universityRoll %></span>
+                    </div>
+                    <div class="detail-row">
+                        <strong>Current Semester:</strong> <span><%= foundStudent.semester %></span>
+                    </div>
+                    
+                    <h4>Academic Performance</h4>
+                    <table>
+                        <thead>
+                            <tr><th>Semester</th><th>GPA</th></tr>
+                        </thead>
+                        <tbody>
+                            <% foundStudent.performance.forEach(p => { %>
+                                <tr>
+                                    <td><%= p.sem %></td>
+                                    <td><%= p.gpa %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+
+                    <p style="margin-top: 15px;">
+                        <a href="#" class="btn btn-info">View Detailed Records</a>
+                        <a href="#" class="btn btn-warning">Reset Password</a>
+                    </p>
+                </div>
+            <% } %>
+        </div>
+    </main>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>
